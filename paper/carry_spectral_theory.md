@@ -425,10 +425,10 @@ Requirements: Python 3.8+, NumPy, SciPy.
 3. S. Kakeya, "On the limits of the roots of an algebraic equation," *Tôhoku Math. J.* 2, 140–142, 1912.
 4. J. Holte, "Carries, Combinatorics, and an Amazing Matrix," *Amer. Math. Monthly* 104(2), 138–149, 1997.
 5. D. E. Knuth, *The Art of Computer Programming, Vol. 2*, 3rd ed., Addison-Wesley, 1997.
-6. [E] Companion paper: "The Trace Anomaly of Binary Multiplication," this series.
-7. [F] Companion paper: "Exact Covariance Structure of Binary Carry Chains," this series (`carry-arithmetic-F-covariance-structure` repo).
+6. [E] Companion paper: "The Trace Anomaly of Binary Multiplication," this series. doi:10.5281/zenodo.18895604
+7. [F] Companion paper: "Exact Covariance Structure of Binary Carry Chains," this series (`carry-arithmetic-F-covariance-structure` repo). doi:10.5281/zenodo.18895607
 8. J. Fulman, "Carries and a Map on the Space of Rational Functions," *arXiv:2306.05529*, 2023.
-9. [B] Companion paper: "Carry Polynomials and the Euler Product: An Approximation Framework," this series. (Contains the Unit Leading Carry theorem used in §6.)
+9. [B] Companion paper: "Carry Polynomials and the Euler Product: An Approximation Framework," this series. (Contains the Unit Leading Carry theorem used in §6.). doi:10.5281/zenodo.18895597
 
 ---
 
