@@ -8,7 +8,7 @@
 
 ## Abstract
 
-Diaconis and Fulman [1] proved that carries in base-$b$ addition form a Markov chain with eigenvalues $1/b^k$. We extend this to multiplication. Our main result is the $m$-Bit Equidistribution Lemma: if the convolution sum contains $m$ independent uniform-mod-$b$ additive components, the carry transfer operator has eigenvalues $\{1, 1/b, \ldots, 1/b^m\}$ exactly, proved via a Bernoulli-smoothing argument on the monomial basis. For multiplication at position $j \geq 2$, two free digit bits yield $m = 2$ and universal eigenvalues $\{1, 1/b, 1/b^2\}$; the remaining $j-1$ product terms provide exponential damping at rate $1/b$ per term, giving $\lambda_k^{(j)} = 1/b^k + O(b^{-j})$. Corollaries include: composition spectral gap $(1/b)^K$ for the $K$-position operator, total variation mixing in $O(\log c_{\max})$ steps, and a Gershgorin perturbation bound for general input distributions. All results verified with exact rational arithmetic for bases 2, 3, 5, 7.
+Diaconis and Fulman [1] proved that carries in base-$b$ addition form a Markov chain with eigenvalues $1/b^k$. We extend this to multiplication. Our main result is the $m$-Bit Equidistribution Lemma: if the convolution sum contains $m$ independent uniform-mod-$b$ additive components, the carry transfer operator has eigenvalues $\lbrace{}1, 1/b, \ldots, 1/b^m\rbrace{}$ exactly, proved via a Bernoulli-smoothing argument on the monomial basis. For multiplication at position $j \geq 2$, two free digit bits yield $m = 2$ and universal eigenvalues $\lbrace{}1, 1/b, 1/b^2\rbrace{}$; the remaining $j-1$ product terms provide exponential damping at rate $1/b$ per term, giving $\lambda_k^{(j)} = 1/b^k + O(b^{-j})$. Corollaries include: composition spectral gap $(1/b)^K$ for the $K$-position operator, total variation mixing in $O(\log c_{\max})$ steps, and a Gershgorin perturbation bound for general input distributions. All results verified with exact rational arithmetic for bases 2, 3, 5, 7.
 
 **Keywords:** carries, Markov chains, Diaconis-Fulman, positional multiplication, spectral gap, equidistribution
 
@@ -42,25 +42,25 @@ $N = pq$ (semiprime), $g(x), h(x), f(x)$ (digit polynomials), $C(x) = g(x)h(x) -
 
 ### 2.1 Setup and Finite State Space
 
-Let $P(v)$ be any distribution on $\{0, \ldots, v_{\max}\}$ with $v_{\max} \geq b-1$. The carry operator on functions $\varphi: \mathbb{Z}_{\geq 0} \to \mathbb{R}$:
+Let $P(v)$ be any distribution on $\lbrace{}0, \ldots, v_{\max}\rbrace{}$ with $v_{\max} \geq b-1$. The carry operator on functions $\varphi: \mathbb{Z}_{\geq 0} \to \mathbb{R}$:
 
 $$(T\varphi)(c) = \sum_v P(v) \cdot \varphi\!\left(\left\lfloor \frac{v+c}{b}\right\rfloor\right)$$
 
-**Finite state space.** For bounded input ($V \leq v_{\max}$), the carry state space is finite. If $c' = \lfloor(V+c)/b\rfloor$ and $c \geq v_{\max}/(b-1)$, then $c' < c$: the operator is eventually contracting. The invariant state space is $\{0, \ldots, N\}$ with $N = \lfloor v_{\max}/(b-1) \rfloor$, and $T$ is an $(N+1) \times (N+1)$ transition matrix. All spectral results in this paper concern this finite-dimensional operator.
+**Finite state space.** For bounded input ($V \leq v_{\max}$), the carry state space is finite. If $c' = \lfloor(V+c)/b\rfloor$ and $c \geq v_{\max}/(b-1)$, then $c' < c$: the operator is eventually contracting. The invariant state space is $\lbrace{}0, \ldots, N\rbrace{}$ with $N = \lfloor v_{\max}/(b-1) \rfloor$, and $T$ is an $(N+1) \times (N+1)$ transition matrix. All spectral results in this paper concern this finite-dimensional operator.
 
 ### 2.2 The Averaged Operator and Gershgorin Bound
 
-**Theorem 1** (Gershgorin Spectral Bound). Let $T$ be the carry transition matrix on $\{0, \ldots, N\}$. Write $v + c = bq + r$ with $r = (v+c) \bmod b$. Then:
+**Theorem 1** (Gershgorin Spectral Bound). Let $T$ be the carry transition matrix on $\lbrace{}0, \ldots, N\rbrace{}$. Write $v + c = bq + r$ with $r = (v+c) \bmod b$. Then:
 
 $$(Tc^k)(c) = \frac{1}{b^k}\sum_{j=0}^k \binom{k}{j} c^j \cdot \mu_{k-j}(c \bmod b)$$
 
-where $\mu_{k-j}(c_0) = \mathbb{E}[(V - r)^{k-j} \mid c \equiv c_0 \pmod{b}]$ depends on $c$ only through $c \bmod b$. Define the averaged operator $\bar{T}$ by replacing $\mu_{k-j}(c_0)$ with its mean $\bar{\mu}_{k-j}$ over $c_0 \in \{0, \ldots, b-1\}$. Then $\bar{T}$ is exactly upper-triangular in the monomial basis with diagonal entries $1/b^k$. The perturbation satisfies $\|T - \bar{T}\|_{\ell^1} \leq C \cdot \rho$ where $\rho = \max_{m \neq 0}|\hat{P}(m)| < 1$ is the maximal non-trivial Fourier coefficient of $P$ modulo $b$. For each $k$ such that $\rho < (b-1)/(2b^{k+1})$, the Gershgorin disc around $1/b^k$ contains exactly one eigenvalue of $T$.
+where $\mu_{k-j}(c_0) = \mathbb{E}[(V - r)^{k-j} \mid c \equiv c_0 \pmod{b}]$ depends on $c$ only through $c \bmod b$. Define the averaged operator $\bar{T}$ by replacing $\mu_{k-j}(c_0)$ with its mean $\bar{\mu}_{k-j}$ over $c_0 \in \lbrace{}0, \ldots, b-1\rbrace{}$. Then $\bar{T}$ is exactly upper-triangular in the monomial basis with diagonal entries $1/b^k$. The perturbation satisfies $\|T - \bar{T}\|_{\ell^1} \leq C \cdot \rho$ where $\rho = \max_{m \neq 0}|\hat{P}(m)| < 1$ is the maximal non-trivial Fourier coefficient of $P$ modulo $b$. For each $k$ such that $\rho < (b-1)/(2b^{k+1})$, the Gershgorin disc around $1/b^k$ contains exactly one eigenvalue of $T$.
 
 *Proof.* We derive the perturbation bound via the Fourier structure of $P$ modulo $b$.
 
-**Claim** (Conditional Moment Bound). For all $s \geq 0$ and $c_0 \in \{0, \ldots, b-1\}$: $|\mu_s(c_0) - \bar{\mu}_s| \leq v_{\max}^s \cdot (b-1)\rho/b$.
+**Claim** (Conditional Moment Bound). For all $s \geq 0$ and $c_0 \in \lbrace{}0, \ldots, b-1\rbrace{}$: $|\mu_s(c_0) - \bar{\mu}_s| \leq v_{\max}^s \cdot (b-1)\rho/b$.
 
-*Proof of Claim.* For fixed $c_0$, write $V + c_0 = bQ + R$ with $R \in \{0, \ldots, b-1\}$, so $\mu_s(c_0) = \mathbb{E}[(bQ - c_0)^s]$. The residue $R \equiv V + c_0 \pmod{b}$ has distribution $P(R = r) = P(V \equiv r - c_0 \pmod{b})$. Expanding via the DFT of the residue distribution of $P$, with $\hat{P}_b(m) = \mathbb{E}[\omega^{mV}]$ and $\omega = e^{2\pi i/b}$:
+*Proof of Claim.* For fixed $c_0$, write $V + c_0 = bQ + R$ with $R \in \lbrace{}0, \ldots, b-1\rbrace{}$, so $\mu_s(c_0) = \mathbb{E}[(bQ - c_0)^s]$. The residue $R \equiv V + c_0 \pmod{b}$ has distribution $P(R = r) = P(V \equiv r - c_0 \pmod{b})$. Expanding via the DFT of the residue distribution of $P$, with $\hat{P}_b(m) = \mathbb{E}[\omega^{mV}]$ and $\omega = e^{2\pi i/b}$:
 
 $$P(R = r) = \frac{1}{b}\sum_{m=0}^{b-1}\hat{P}_b(m)\,\omega^{m(r - c_0)} = \frac{1}{b} + \frac{1}{b}\sum_{m=1}^{b-1}\hat{P}_b(m)\,\omega^{m(r - c_0)}$$
 
@@ -74,7 +74,7 @@ The constant $C$ admits the explicit bound $C \leq (N+1) \cdot v_{\max}^N$: each
 
 *Remark (isolation condition).* The condition $\rho < (b-1)/(2b^{k+1})$ ensures that the Gershgorin disc of radius $C\rho$ around the diagonal entry $1/b^k$ does not overlap the disc around $1/b^{k+1}$. More precisely, the disc radius in the monomial basis includes both the perturbation $\|T - \bar{T}\|$ and the off-diagonal entries of $\bar{T}$ itself. Since $\bar{T}$ is upper-triangular with entries decaying as $O(1/b^j)$, the off-diagonal contribution is bounded by $\sum_{j > k} |\bar{T}_{k,j}| \leq C'/b^k$ for a constant $C'$ depending on the moments of $P$. The stated condition absorbs this into the bound on $\rho$ and is sufficient but not sharp.
 
-In particular, when $\rho$ is small (smooth input distribution), the eigenvalues of $T$ are close to $\{1, 1/b, \ldots, 1/b^N\}$. For the Diaconis-Fulman addition case ($V \sim \text{Binom}(n, 1/b)$), the m-Bit Equidistribution Lemma (Theorem 2) gives the exact spectrum without perturbation bounds.
+In particular, when $\rho$ is small (smooth input distribution), the eigenvalues of $T$ are close to $\lbrace{}1, 1/b, \ldots, 1/b^N\rbrace{}$. For the Diaconis-Fulman addition case ($V \sim \text{Binom}(n, 1/b)$), the m-Bit Equidistribution Lemma (Theorem 2) gives the exact spectrum without perturbation bounds.
 
 ---
 
@@ -86,11 +86,11 @@ This section contains the paper's main result: a structural theorem that yields 
 
 **Proposition 1** (Parity Lemma for Multiplication). For the carry step $c' = \lfloor (V+c)/b \rfloor$ in base $b=2$, the eigenvalue $\lambda_1 = 1/2$ holds for ANY convolution distribution $P(V)$ provided $P(V \text{ odd}) = 1/2$. For multiplication, $\text{conv}_j$ always contains the independent term $g_j \cdot h_0 = g_j \sim \text{Bernoulli}(1/2)$, ensuring uniform parity.
 
-*Proof.* This is the $m = 1$, $k = 1$ case of Theorem 2. Decompose $V = U + S$ where $U \sim \text{Bernoulli}(1/2)$ is independent of $S$ (so $V$ has one uniform-mod-2 component). By the Bernoulli smoothing argument (Step 2 of Theorem 2): $(Tc)(c) = \mathbb{E}_S[\mathbb{E}_U[\lfloor(S + c + U)/2\rfloor]]$. For fixed $w = S + c$: $\frac{1}{2}[\lfloor w/2 \rfloor + \lfloor(w+1)/2 \rfloor] = w/2$. Thus $(Tc)(c) = \mathbb{E}_S[(S+c)/2] = c/2 + \mathbb{E}[S]/2$, which is a degree-1 polynomial in $c$ with leading coefficient $1/2$. Since $T$ maps degree-1 polynomials to degree-1 polynomials with this leading coefficient, the operator is upper-triangular in the monomial basis $\{1, c\}$ with diagonal entries $\{1, 1/2\}$, giving eigenvalue $\lambda_1 = 1/2$. $\square$
+*Proof.* This is the $m = 1$, $k = 1$ case of Theorem 2. Decompose $V = U + S$ where $U \sim \text{Bernoulli}(1/2)$ is independent of $S$ (so $V$ has one uniform-mod-2 component). By the Bernoulli smoothing argument (Step 2 of Theorem 2): $(Tc)(c) = \mathbb{E}_S[\mathbb{E}_U[\lfloor(S + c + U)/2\rfloor]]$. For fixed $w = S + c$: $\frac{1}{2}[\lfloor w/2 \rfloor + \lfloor(w+1)/2 \rfloor] = w/2$. Thus $(Tc)(c) = \mathbb{E}_S[(S+c)/2] = c/2 + \mathbb{E}[S]/2$, which is a degree-1 polynomial in $c$ with leading coefficient $1/2$. Since $T$ maps degree-1 polynomials to degree-1 polynomials with this leading coefficient, the operator is upper-triangular in the monomial basis $\lbrace{}1, c\rbrace{}$ with diagonal entries $\lbrace{}1, 1/2\rbrace{}$, giving eigenvalue $\lambda_1 = 1/2$. $\square$
 
 ### 3.2 Statement and Proof
 
-**Theorem 2** ($m$-Bit Equidistribution Lemma). Let $b \geq 2$ and $V = U_1 + \cdots + U_m + S$ where $U_i$ are independent random variables each uniform modulo $b$ (i.e., $P(U_i \equiv r \pmod{b}) = 1/b$ for all $r$), independent of $S \geq 0$. Then the carry operator $(T\varphi)(c) = \mathbb{E}_V[\varphi(\lfloor(V+c)/b\rfloor)]$ satisfies: $(Tc^k)(c)$ is a polynomial of degree $k$ in $c$, with leading coefficient $1/b^k$ and no residue-class oscillation, for all $k \leq m$. Consequently, $T$ is exactly upper-triangular in the monomial basis $\{1, c, c^2, \ldots, c^m\}$ with diagonal entries $\{1, 1/b, 1/b^2, \ldots, 1/b^m\}$, and these are the first $m+1$ eigenvalues of $T$ on any state space of dimension $\geq m+1$.
+**Theorem 2** ($m$-Bit Equidistribution Lemma). Let $b \geq 2$ and $V = U_1 + \cdots + U_m + S$ where $U_i$ are independent random variables each uniform modulo $b$ (i.e., $P(U_i \equiv r \pmod{b}) = 1/b$ for all $r$), independent of $S \geq 0$. Then the carry operator $(T\varphi)(c) = \mathbb{E}_V[\varphi(\lfloor(V+c)/b\rfloor)]$ satisfies: $(Tc^k)(c)$ is a polynomial of degree $k$ in $c$, with leading coefficient $1/b^k$ and no residue-class oscillation, for all $k \leq m$. Consequently, $T$ is exactly upper-triangular in the monomial basis $\lbrace{}1, c, c^2, \ldots, c^m\rbrace{}$ with diagonal entries $\lbrace{}1, 1/b, 1/b^2, \ldots, 1/b^m\rbrace{}$, and these are the first $m+1$ eigenvalues of $T$ on any state space of dimension $\geq m+1$.
 
 Proof (base $b = 2$; general $b$ below). Write $V = R + S$ with $R = U_1 + \cdots + U_m \sim \text{Binom}(m, 1/2)$, independent of $S$. Then:
 
@@ -124,15 +124,15 @@ $$\frac{1}{b}\sum_{j=0}^{b-1} \omega^{m(u+j)} B(u+j) = \omega^{mu} \cdot \frac{1
 
 Since $\frac{1}{b}\sum_j \omega^{mj} = 0$ for $m \neq 0$, the leading term of $B$ vanishes and only the forward-difference terms survive, reducing $\deg(B)$ by 1. The induction proceeds identically: after $m$ uniform-mod-$b$ averagings, all oscillatory modes of degree $\leq k-1-m$ vanish. For $m \geq k$: no oscillation remains, and the leading coefficient is $1/b^k$. $\square$
 
-**Corollary 2.1** (Diaconis-Fulman Spectrum for Addition). For base-$b$ addition of $n$ independent $\text{Uniform}\{0, \ldots, b-1\}$ digits, $V$ has $n$ independent uniform-mod-$b$ components. By Theorem 2, the carry operator on $\{0, \ldots, \lfloor n/(b-1) \rfloor\}$ has eigenvalues exactly $\{1, 1/b, \ldots, 1/b^{\lfloor n/(b-1)\rfloor}\}$, recovering [1, Theorem 1].
+**Corollary 2.1** (Diaconis-Fulman Spectrum for Addition). For base-$b$ addition of $n$ independent $\text{Uniform}\lbrace{}0, \ldots, b-1\rbrace{}$ digits, $V$ has $n$ independent uniform-mod-$b$ components. By Theorem 2, the carry operator on $\lbrace{}0, \ldots, \lfloor n/(b-1) \rfloor\rbrace{}$ has eigenvalues exactly $\lbrace{}1, 1/b, \ldots, 1/b^{\lfloor n/(b-1)\rfloor}\rbrace{}$, recovering [1, Theorem 1].
 
 ### 3.3 Corollaries for Multiplication
 
-**Corollary 2.2** (Double Universality). For base-2 multiplication at position $j \geq 2$: $\text{conv}_j = g_j + h_j + S$ where $g_j, h_j \sim \text{Bernoulli}(1/2)$ are independent of $S = \sum_{i=1}^{j-1} g_i h_{j-i}$. Thus $m = 2$, and the transfer operator $T_j$ has eigenvalues $\{1, 1/2, 1/4\}$ exactly. Verified for $j = 2, \ldots, 10$ with exact rational arithmetic (A13).
+**Corollary 2.2** (Double Universality). For base-2 multiplication at position $j \geq 2$: $\text{conv}_j = g_j + h_j + S$ where $g_j, h_j \sim \text{Bernoulli}(1/2)$ are independent of $S = \sum_{i=1}^{j-1} g_i h_{j-i}$. Thus $m = 2$, and the transfer operator $T_j$ has eigenvalues $\lbrace{}1, 1/2, 1/4\rbrace{}$ exactly. Verified for $j = 2, \ldots, 10$ with exact rational arithmetic (A13).
 
 **Corollary 2.3** (Composition Spectral Gap). The position-dependent operators $T_1, \ldots, T_K$ are each upper-triangular in the monomial basis through degree 2 with diagonal entries $(1, 1/b, 1/b^2)$ (Corollary 2.2 for $b=2$; Corollary 2.4 for general prime $b$). The product of upper-triangular matrices is upper-triangular with the product of diagonal entries, so the composed operator $T_1 \cdots T_K$ has eigenvalues $(1, (1/b)^K, (1/b^2)^K)$ on the degree-$\leq 2$ polynomial subspace. The dominant sub-leading eigenvalue is $(1/b)^K$, governing the convergence rate of boundary observables. In particular, the trace anomaly satisfies $\alpha_1(K) = c_1 + P(K) \cdot (1/2)^K$ (base 2), where the limit $c_1$ and the polynomial prefactor $P(K)$ are characterized in [E]; direct enumeration to $K = 21$ yields $c_1 = 0.17453\ldots$, matching $\pi/18$ to 4.3 digits (conjectured but not proved).
 
-**Corollary 2.4** (Base-$b$ Generalization). For prime base $b$, the multiplication convolution at position $j \geq 2$ contains the terms $g_j \cdot h_0$ and $g_0 \cdot h_j$, where $g_j, h_j \sim \text{Uniform}\{0, \ldots, b-1\}$ and $g_0, h_0 \in \{1, \ldots, b-1\}$ are coprime to $b$. These provide two independent uniform-mod-$b$ additive components, giving eigenvalues $\{1, 1/b, 1/b^2\}$ exactly. Verified for bases 2, 3, 5, 7 (A13).
+**Corollary 2.4** (Base-$b$ Generalization). For prime base $b$, the multiplication convolution at position $j \geq 2$ contains the terms $g_j \cdot h_0$ and $g_0 \cdot h_j$, where $g_j, h_j \sim \text{Uniform}\lbrace{}0, \ldots, b-1\rbrace{}$ and $g_0, h_0 \in \lbrace{}1, \ldots, b-1\rbrace{}$ are coprime to $b$. These provide two independent uniform-mod-$b$ additive components, giving eigenvalues $\lbrace{}1, 1/b, 1/b^2\rbrace{}$ exactly. Verified for bases 2, 3, 5, 7 (A13).
 
 ### 3.4 Exponential Convergence of Higher Eigenvalues
 
@@ -144,7 +144,7 @@ In particular, $\lambda_k^{(j)} \to 1/b^k$ exponentially fast as $j \to \infty$.
 
 *Proof.* The convolution $\text{conv}_j = g_j h_0 + g_0 h_j + \sum_{i=1}^{j-1} g_i h_{j-i}$ decomposes into $j+1$ mutually independent terms (each uses a unique pair of digit bits). The first two terms provide two uniform-mod-$b$ components (Corollary 2.4). The remaining $n = j-1$ terms $X_i = g_i h_{j-i}$ are products of independent uniform digits.
 
-**Damping factor.** For $g, h \sim \text{Uniform}\{0, \ldots, b-1\}$ independently and $b$ prime, the characteristic function of $X = gh$ at frequency $m/b$ ($m \not\equiv 0$) is:
+**Damping factor.** For $g, h \sim \text{Uniform}\lbrace{}0, \ldots, b-1\rbrace{}$ independently and $b$ prime, the characteristic function of $X = gh$ at frequency $m/b$ ($m \not\equiv 0$) is:
 
 $$\mathbb{E}[\omega^{mX}] = \frac{1}{b^2}\sum_{a=0}^{b-1}\sum_{c=0}^{b-1} \omega^{mac} = \frac{1}{b}$$
 
@@ -162,7 +162,7 @@ $$\mathcal{A}_{X_i}[\omega^{mc}B^{(m)}(c)] = \omega^{mc}[\mathbb{E}[\omega^{mX_i
 
 Since $|\mathbb{E}[\omega^{mX_i}]| = 1/b$ (damping factor, proved above), the leading coefficient of each $B^{(m)}$ is damped by $1/b$ per application, and the iteration matrix $L$ has diagonal entries $1/b$ instead of $1/2$. The Jordan form argument is identical.
 
-**Combining.** The two uniform-mod-$b$ components (Theorem 2) eliminate oscillatory degrees 0 through 1 for $k \leq 2$. For $k \geq 3$, after the two uniform smoothings the residual oscillation has degree $k-3$. The $n = j-1$ product terms then damp the $l$-th coefficient to $|b_l^{(n)}| \leq C \cdot n^{k-3-l} \cdot b^{-n}$. On the finite state space $\{0, \ldots, N_j\}$ with $N_j = O(j)$, expressing the oscillatory function in the monomial basis and summing the Gershgorin off-diagonal entries in row $k$ yields:
+**Combining.** The two uniform-mod-$b$ components (Theorem 2) eliminate oscillatory degrees 0 through 1 for $k \leq 2$. For $k \geq 3$, after the two uniform smoothings the residual oscillation has degree $k-3$. The $n = j-1$ product terms then damp the $l$-th coefficient to $|b_l^{(n)}| \leq C \cdot n^{k-3-l} \cdot b^{-n}$. On the finite state space $\lbrace{}0, \ldots, N_j\rbrace{}$ with $N_j = O(j)$, expressing the oscillatory function in the monomial basis and summing the Gershgorin off-diagonal entries in row $k$ yields:
 
 $$|\lambda_k^{(j)} - 1/b^k| \leq \sum_{l=0}^{k-3} |b_l^{(j-1)}| \cdot N_j^l \leq C' \cdot j^{k-3} \cdot b^{-(j-1)} \cdot \sum_{l=0}^{k-3} \left(\frac{j}{j-1}\right)^l = O(j^{k-3} \cdot b^{-(j-1)})$$
 
@@ -170,13 +170,13 @@ where the geometric sum $\sum_{l=0}^{k-3}(j/(j-1))^l$ is bounded by $k-2$ for al
 
 *Empirical verification (A13, A19):* $\lambda_3^{(3)} = 3/32 = 0.09375$ (error $0.031$ from $1/8$); $\lambda_3^{(5)} \approx 0.1195$ (error $0.006$); $\lambda_3^{(8)} \approx 0.1250$ (error $< 0.001$). The geometric rate $\sim (1/2)^j$ is confirmed. Fitting $|\lambda_k^{(j)} - 1/b^k| \sim C \cdot j^\alpha \cdot (1/b)^j$ for $k = 3, 4, 5$ yields $\alpha \approx k - 3$ (A19), confirming the tight exponent.
 
-**Observation (G08).** The base-3 multiplication transfer operator $T_j$ has universal eigenvalues $\{1, 1/3, 1/9\}$ for all $j = 1, \ldots, 6$, with $\lambda_3^{(j)} \to 1/27$ as $j \to \infty$.
+**Observation (G08).** The base-3 multiplication transfer operator $T_j$ has universal eigenvalues $\lbrace{}1, 1/3, 1/9\rbrace{}$ for all $j = 1, \ldots, 6$, with $\lambda_3^{(j)} \to 1/27$ as $j \to \infty$.
 
 ---
 
 ## 4. Total Variation Mixing
 
-**Theorem 3** (Mixing Bound). Let the convolution input $V$ satisfy the uniform-mod-$b$ property (Theorem 2 with $\rho = 0$), so that the remainder $r_t = (V_t + c_t) \bmod b$ is uniform on $\{0, \ldots, b-1\}$ at each step. Then the carry chain mixes in $O(\log(c_{\max})/\log b)$ steps:
+**Theorem 3** (Mixing Bound). Let the convolution input $V$ satisfy the uniform-mod-$b$ property (Theorem 2 with $\rho = 0$), so that the remainder $r_t = (V_t + c_t) \bmod b$ is uniform on $\lbrace{}0, \ldots, b-1\rbrace{}$ at each step. Then the carry chain mixes in $O(\log(c_{\max})/\log b)$ steps:
 
 $$\|P_t - \pi\|_{TV} \leq c_{\max}/b^t$$
 
@@ -184,7 +184,7 @@ $$\|P_t - \pi\|_{TV} \leq c_{\max}/b^t$$
 
 $$d_{t+1} = \left\lfloor\frac{r_t + d_t}{b}\right\rfloor$$
 
-since the integer parts cancel. For the multiplication carry chain, $r_t$ is uniform on $\{0, \ldots, b-1\}$ (this follows from the uniform-mod-$b$ property of the convolution, Theorem 2 with $\rho = 0$). Using the identity $\sum_{r=0}^{b-1}\lfloor(r+d)/b\rfloor = d$ for any non-negative integer $d$:
+since the integer parts cancel. For the multiplication carry chain, $r_t$ is uniform on $\lbrace{}0, \ldots, b-1\rbrace{}$ (this follows from the uniform-mod-$b$ property of the convolution, Theorem 2 with $\rho = 0$). Using the identity $\sum_{r=0}^{b-1}\lfloor(r+d)/b\rfloor = d$ for any non-negative integer $d$:
 
 $$\mathbb{E}[d_{t+1} \mid \mathcal{F}_t] = \frac{1}{b}\sum_{r=0}^{b-1}\left\lfloor\frac{r + d_t}{b}\right\rfloor = \frac{d_t}{b}$$
 
@@ -323,7 +323,7 @@ The condition $D = 2d$ holds for approximately 61.4% of semiprimes in the range 
 
 **Corollary 9** (Eneström-Kakeya Bound). For base-2 semiprimes with all carry coefficients positive: $r_{\max} \leq 3$.
 
-*Proof.* We use the carry identity $\text{conv}_k + c_k = b \cdot c_{k+1} + f_k$, giving $c_k = b \cdot c_{k+1} + f_k - \text{conv}_k$ for each position $k$. Since $f_k \in \{0, 1\}$ and $\text{conv}_k \geq 0$:
+*Proof.* We use the carry identity $\text{conv}_k + c_k = b \cdot c_{k+1} + f_k$, giving $c_k = b \cdot c_{k+1} + f_k - \text{conv}_k$ for each position $k$. Since $f_k \in \lbrace{}0, 1\rbrace{}$ and $\text{conv}_k \geq 0$:
 
 $$c_k \leq 2 c_{k+1} + 1 \quad \text{for all } k$$
 
@@ -388,7 +388,7 @@ Extensive computational searches over all semiprimes $N = pq$ with $p, q < 10^4$
 
 ## 9. Conclusion
 
-We have developed the spectral theory of carries in positional multiplication, extending the Diaconis-Fulman framework from addition to multiplication. The main contribution is the $m$-Bit Equidistribution Lemma (Theorem 2), which yields exact eigenvalues $\{1, 1/b, \ldots, 1/b^m\}$ for carry operators with $m$ independent uniform-mod-$b$ components, via a Bernoulli-smoothing argument on the monomial basis. For multiplication, this gives universal eigenvalues $\{1, 1/b, 1/b^2\}$ at each position $j \geq 2$, with higher eigenvalues converging exponentially (Proposition 3). The algebraic perspective (Part III) connects the local mixing rates to the global root distribution of the carry quotient polynomial, yielding a proved spectral radius bound $r_{\max} \leq 3$ for all-positive carry profiles via the Eneström-Kakeya theorem. Two conjectures remain open: the $(b-1)/b$ anti-correlation law (Conjecture 4), for which a boundary transfer theorem extending the covariance induction of [F] is the natural path; and the tight bound $r_{\max} \leq b$ (Conjecture 10), for which the Rouché gap analysis provides strong numerical evidence but no proof.
+We have developed the spectral theory of carries in positional multiplication, extending the Diaconis-Fulman framework from addition to multiplication. The main contribution is the $m$-Bit Equidistribution Lemma (Theorem 2), which yields exact eigenvalues $\lbrace{}1, 1/b, \ldots, 1/b^m\rbrace{}$ for carry operators with $m$ independent uniform-mod-$b$ components, via a Bernoulli-smoothing argument on the monomial basis. For multiplication, this gives universal eigenvalues $\lbrace{}1, 1/b, 1/b^2\rbrace{}$ at each position $j \geq 2$, with higher eigenvalues converging exponentially (Proposition 3). The algebraic perspective (Part III) connects the local mixing rates to the global root distribution of the carry quotient polynomial, yielding a proved spectral radius bound $r_{\max} \leq 3$ for all-positive carry profiles via the Eneström-Kakeya theorem. Two conjectures remain open: the $(b-1)/b$ anti-correlation law (Conjecture 4), for which a boundary transfer theorem extending the covariance induction of [F] is the natural path; and the tight bound $r_{\max} \leq b$ (Conjecture 10), for which the Rouché gap analysis provides strong numerical evidence but no proof.
 
 ### Open Problems
 
