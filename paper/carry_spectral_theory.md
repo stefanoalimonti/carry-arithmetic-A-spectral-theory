@@ -8,7 +8,7 @@
 
 ## Abstract
 
-Diaconis and Fulman [1] proved that carries in base-$b$ addition form a Markov chain with eigenvalues $1/b^k$. We extend this to multiplication. Our main result is the $m$-Bit Equidistribution Lemma: if the convolution sum contains $m$ independent uniform-mod-$b$ additive components, the carry transfer operator has eigenvalues $\lbrace{}1, 1/b, \ldots, 1/b^m\rbrace{}$ exactly, proved via a Bernoulli-smoothing argument on the monomial basis. For multiplication at position $j \geq 2$, two free digit bits yield $m = 2$ and universal eigenvalues $\lbrace{}1, 1/b, 1/b^2\rbrace{}$; the remaining $j-1$ product terms provide exponential damping at rate $1/b$ per term, giving $\lambda_k^{(j)} = 1/b^k + O(b^{-j})$. Corollaries include: composition spectral gap $(1/b)^K$ for the $K$-position operator, total variation mixing in $O(\log c_{\max})$ steps, and a Gershgorin perturbation bound for general input distributions. All results verified with exact rational arithmetic for bases 2, 3, 5, 7.
+Diaconis and Fulman [1] proved that carries in base-$b$ addition form a Markov chain with eigenvalues $1/b^k$. We extend this to multiplication. Our main result is the $m$-Bit Equidistribution Lemma: in the binary case proved here, if the convolution sum contains $m$ independent uniform-mod-$b$ additive components, the carry transfer operator has eigenvalues $\lbrace{}1, 1/b, \ldots, 1/b^m\rbrace{}$ exactly, via a Bernoulli-smoothing argument on the monomial basis; the general prime-base extension is given in proof-sketch form in §3.2. For multiplication at position $j \geq 2$, two free digit bits yield $m = 2$ and universal eigenvalues $\lbrace{}1, 1/b, 1/b^2\rbrace{}$; the remaining $j-1$ product terms provide exponential damping at rate $1/b$ per term, giving $\lambda_k^{(j)} = 1/b^k + O(b^{-j})$. Corollaries include: composition spectral gap $(1/b)^K$ for the $K$-position operator, total variation mixing in $O(\log c_{\max})$ steps, and a Gershgorin perturbation bound for general input distributions. All results are verified with exact rational arithmetic for bases 2, 3, 5, 7.
 
 **Keywords:** carries, Markov chains, Diaconis-Fulman, positional multiplication, spectral gap, equidistribution
 
@@ -18,11 +18,79 @@ Diaconis and Fulman [1] proved that carries in base-$b$ addition form a Markov c
 
 ## 1. Introduction
 
-When two integers are multiplied in positional notation (base $b$), carries propagate from digit to digit via the recursion:
+When two integers are multiplied by hand in base $b$, one writes out partial products and sums them column by column, propagating carries to the left. This is the same algorithm taught in primary school, and it is the process we analyze. The central object is the carry sequence $c_0, c_1, c_2, \ldots$ that propagates through the columns. We show that this sequence forms a Markov chain whose spectral properties are surprisingly rigid.
 
-$$c_{k+1} = \left\lfloor \frac{\text{conv}_k + c_k}{b} \right\rfloor, \qquad \text{conv}_k = \sum_{i+j=k} g_i h_j$$
+Diaconis and Fulman [1] proved that carries in base-$b$ *addition* form a Markov chain with eigenvalues $1/b^k$. We extend this to multiplication and develop the full spectral theory.
 
-where $g_i, h_j$ are the digits of the two factors. Diaconis and Fulman [1] proved that carries in base-$b$ *addition* form a Markov chain with eigenvalues $1/b^k$. We extend this to multiplication and develop the full spectral theory.
+### 1.1 A Small Example: $13 \times 11$ in Base 2
+
+To ground the discussion, we work through a complete example. Consider multiplying $13 \times 11 = 143$ in binary. The digits are:
+
+$$13 = (1101)_2, \quad g_3 = 1,\; g_2 = 1,\; g_1 = 0,\; g_0 = 1$$
+$$11 = (1011)_2, \quad h_3 = 1,\; h_2 = 0,\; h_1 = 1,\; h_0 = 1$$
+
+The grade-school multiplication algorithm writes out one partial product for each digit of $h$, shifted by the appropriate number of positions, and sums the columns:
+
+```
+          1 1 0 1          (13)
+        × 1 0 1 1          (11)
+        ---------
+          1 1 0 1          h₀ = 1:  13 × 1
+        1 1 0 1 ·          h₁ = 1:  13 × 1, shifted left 1
+      0 0 0 0 · ·          h₂ = 0:  13 × 0, shifted left 2
+    1 1 0 1 · · ·          h₃ = 1:  13 × 1, shifted left 3
+    -----------------
+    1 0 0 0 1 1 1 1        (143)
+```
+
+Reading each column from bottom to top, the *column sum* at position $k$ is
+
+$$\text{conv}_k = \sum_{i+j=k} g_i \, h_j$$
+
+which is the discrete convolution of the digit sequences — exactly the same convolution that appears in polynomial multiplication. The carry at each position is then determined by a simple recursion: divide the column sum plus incoming carry by the base $b$; the remainder is the output digit, and the quotient is the outgoing carry:
+
+$$c_{k+1} = \left\lfloor \frac{\text{conv}_k + c_k}{b} \right\rfloor, \qquad f_k = (\text{conv}_k + c_k) \bmod b$$
+
+Here is the complete trace for our example ($b = 2$, $c_0 = 0$):
+
+| Pos $k$ | Column sum $\text{conv}_k$ | Terms | Carry in $c_k$ | Total | Digit $f_k$ | Carry out $c_{k+1}$ |
+|---|---|---|---|---|---|---|
+| 0 | $g_0 h_0 = 1$ | 1 term | 0 | 1 | 1 | 0 |
+| 1 | $g_1 h_0 + g_0 h_1 = 0 + 1 = 1$ | 2 terms | 0 | 1 | 1 | 0 |
+| 2 | $g_2 h_0 + g_1 h_1 + g_0 h_2 = 1 + 0 + 0 = 1$ | 3 terms | 0 | 1 | 1 | 0 |
+| 3 | $g_3 h_0 + g_2 h_1 + g_1 h_2 + g_0 h_3 = 1 + 1 + 0 + 1 = 3$ | 4 terms | 0 | **3** | 1 | **1** |
+| 4 | $g_3 h_1 + g_2 h_2 + g_1 h_3 = 1 + 0 + 0 = 1$ | 3 terms | **1** | 2 | 0 | **1** |
+| 5 | $g_3 h_2 + g_2 h_3 = 0 + 1 = 1$ | 2 terms | **1** | 2 | 0 | **1** |
+| 6 | $g_3 h_3 = 1$ | 1 term | **1** | 2 | 0 | **1** |
+
+The output digits $(f_0, \ldots, f_6, c_7) = (1,1,1,1,0,0,0,1)$ give $143 = (10001111)_2$.
+
+**The carry chain as a Markov process.** The carry sequence $c_0 = 0, 0, 0, 0, 1, 1, 1, 1$ is the trajectory of a Markov chain: the next carry $c_{k+1}$ depends on the current carry $c_k$ and the random column sum $\text{conv}_k$, but not on earlier carries. The figure below traces the carry propagation through the multiplication:
+
+```
+Position:   0      1      2      3      4      5      6
+           ┌──┐   ┌──┐   ┌──┐   ┌──┐   ┌──┐   ┌──┐   ┌──┐
+conv_k:    │ 1│   │ 1│   │ 1│   │ 3│   │ 1│   │ 1│   │ 1│
+           └──┘   └──┘   └──┘   └──┘   └──┘   └──┘   └──┘
+c_k:  0 ───► 0 ───► 0 ───► 0 ───► 1 ───► 1 ───► 1 ───► 1
+                                   ▲
+                              first carry
+           ┌──┐   ┌──┐   ┌──┐   ┌──┐   ┌──┐   ┌──┐   ┌──┐
+f_k:       │ 1│   │ 1│   │ 1│   │ 1│   │ 0│   │ 0│   │ 0│
+           └──┘   └──┘   └──┘   └──┘   └──┘   └──┘   └──┘
+```
+
+At position 3, the column sum reaches 3 — exceeding the base — and the first carry is born. Once present, it persists through subsequent positions. This persistence is governed by the *spectral gap* of the carry transfer operator: the second eigenvalue $\lambda_1 = 1/b$ controls how quickly the chain forgets its initial state.
+
+**Why multiplication differs from addition.** In addition of $n+1$ numbers, each column sum is $\sum_{i=1}^{n+1} a_i^{(k)}$ — a sum of $n+1$ independent digits, all uniform modulo $b$. The reachable carry chain then has the classical Diaconis-Fulman eigenvalues $\lbrace{}1, 1/b, \ldots, 1/b^n\rbrace{}$ [1]. In multiplication, the column sum $\text{conv}_k = \sum_{i+j=k} g_i h_j$ has a different structure. In the local position-$j$ analysis of Part I — equivalently, for interior columns where both endpoint terms are present — there are two distinguished summands, $g_j h_0$ and $g_0 h_j$, that are independent uniform-mod-$b$ digits (since $g_0, h_0 \geq 1$ are coprime to $b$ for prime $b$). The remaining terms are products $g_i h_j$, which are *not* uniformly distributed. Our main result (Theorem 2, the $m$-Bit Equidistribution Lemma) shows that these two uniform components determine the first three eigenvalues $\lbrace{}1, 1/b, 1/b^2\rbrace{}$ exactly, while the product terms provide exponential damping of higher eigenvalues.
+
+### 1.2 Prior Work on Multiplication Carries
+
+Diaconis and Fulman [1, §6] briefly discuss the extension of their carry analysis to multiplication, observing that "carries in multiplication are more complex" and that the convolution structure replaces the simple column sum of addition. Holte [4] similarly restricts attention to carries in addition. Neither paper develops the spectral theory of the multiplication operator — the column sums in multiplication have fewer uniform components, the state space grows with position, and the transfer operator is position-dependent. The present paper addresses all three difficulties: the $m$-Bit Equidistribution Lemma (Theorem 2) handles the reduced uniformity, the Gershgorin perturbation bound (Theorem 1) controls non-uniform inputs, and the exponential convergence result (Proposition 3) shows that position-dependence vanishes rapidly.
+
+The connection to *riffle shuffling* deserves mention. The eigenvalues $1/b^k$ of the Diaconis-Fulman carry chain are the same as those of the Gilbert-Shannon-Reeds riffle shuffle [1, §4]. The Bernoulli smoothing operator $\mathcal{A}$ used in our proof of the $m$-Bit Equidistribution Lemma (§3.2) is structurally analogous to the descent-smoothing operator that appears in the shuffle analysis: both average over a uniform-mod-$b$ shift and reduce the degree of oscillatory Fourier modes by one per application. For multiplication, the key difference is that only $m = 2$ such smoothings are available at each position, limiting the exact eigenvalues to $\lbrace{}1, 1/b, 1/b^2\rbrace{}$.
+
+### 1.3 Structure of the Paper
 
 The paper develops two complementary spectral viewpoints on the same algebraic object.
 
@@ -46,11 +114,11 @@ Let $P(v)$ be any distribution on $\lbrace{}0, \ldots, v_{\max}\rbrace{}$ with $
 
 $$(T\varphi)(c) = \sum_v P(v) \cdot \varphi\!\left(\left\lfloor \frac{v+c}{b}\right\rfloor\right)$$
 
-**Finite state space.** For bounded input ($V \leq v_{\max}$), the carry state space is finite. If $c' = \lfloor(V+c)/b\rfloor$ and $c \geq v_{\max}/(b-1)$, then $c' < c$: the operator is eventually contracting. The invariant state space is $\lbrace{}0, \ldots, N\rbrace{}$ with $N = \lfloor v_{\max}/(b-1) \rfloor$, and $T$ is an $(N+1) \times (N+1)$ transition matrix. All spectral results in this paper concern this finite-dimensional operator.
+**Finite state space.** For bounded input ($V \leq v_{\max}$), the carry state space is finite. If $c' = \lfloor(V+c)/b\rfloor$ and $c \geq v_{\max}/(b-1)$, then $c' < c$: the operator is eventually contracting. The invariant state space is $\lbrace{}0, \ldots, N_c\rbrace{}$ with $N_c = \lfloor v_{\max}/(b-1) \rfloor$, and $T$ is an $(N_c+1) \times (N_c+1)$ transition matrix.  (We write $N_c$ for the maximum carry state to avoid collision with $N = pq$ used elsewhere for the semiprime.) All spectral results in this paper concern this finite-dimensional operator.
 
 ### 2.2 The Averaged Operator and Gershgorin Bound
 
-**Theorem 1** (Gershgorin Spectral Bound). Let $T$ be the carry transition matrix on $\lbrace{}0, \ldots, N\rbrace{}$. Write $v + c = bq + r$ with $r = (v+c) \bmod b$. Then:
+**Theorem 1** (Gershgorin Spectral Bound). Let $T$ be the carry transition matrix on $\lbrace{}0, \ldots, N_c\rbrace{}$. Write $v + c = bq + r$ with $r = (v+c) \bmod b$. Then:
 
 $$(Tc^k)(c) = \frac{1}{b^k}\sum_{j=0}^k \binom{k}{j} c^j \cdot \mu_{k-j}(c \bmod b)$$
 
@@ -70,11 +138,11 @@ $$\|P_R - \mathrm{Unif}\|_1 \leq (b-1)\rho/b$$
 
 gives $|\mu_s(c_0) - \bar{\mu}_s| \leq v_{\max}^s \cdot (b-1)\rho/b$. $\square$
 
-The constant $C$ admits the explicit bound $C \leq (N+1) \cdot v_{\max}^N$: each row of $T - \bar{T}$ has at most $N+1$ nonzero entries, and each entry $(T - \bar{T})_{i,k}$ is a conditional moment difference $|\mu_{k-i}(c_0) - \bar{\mu}_{k-i}| \leq v_{\max}^{k-i} \cdot (b-1)\rho/b$ (Claim above). Summing over $i$ gives the row bound. In practice this bound is extremely loose: since $T$ and $\bar{T}$ are both stochastic matrices with row sums equal to 1, $\|T - \bar{T}\|_{\ell^1} \leq 2$ a priori, and systematic computation across families of non-uniform distributions (biased binomial, truncated geometric, skewed uniform) yields $C_{\text{actual}} \leq 2$ with slack factors exceeding $10^6$ for moderate $N$ (A20). $\square$
+The constant $C$ admits the explicit bound $C \leq (N_c+1) \cdot v_{\max}^{N_c}$: each row of $T - \bar{T}$ has at most $N_c+1$ nonzero entries, and each entry $(T - \bar{T})_{i,k}$ is a conditional moment difference $|\mu_{k-i}(c_0) - \bar{\mu}_{k-i}| \leq v_{\max}^{k-i} \cdot (b-1)\rho/b$ (Claim above). Summing over $i$ gives the row bound. In practice this bound is extremely loose: since $T$ and $\bar{T}$ are both stochastic matrices with row sums equal to 1, $\|T - \bar{T}\|_{\ell^1} \leq 2$ a priori, and systematic computation across families of non-uniform distributions (biased binomial, truncated geometric, skewed uniform) yields $C_{\text{actual}} \leq 2$ with slack factors exceeding $10^6$ for moderate $N_c$ (A20). $\square$
 
 *Remark (isolation condition).* The condition $\rho < (b-1)/(2b^{k+1})$ ensures that the Gershgorin disc of radius $C\rho$ around the diagonal entry $1/b^k$ does not overlap the disc around $1/b^{k+1}$. More precisely, the disc radius in the monomial basis includes both the perturbation $\|T - \bar{T}\|$ and the off-diagonal entries of $\bar{T}$ itself. Since $\bar{T}$ is upper-triangular with entries decaying as $O(1/b^j)$, the off-diagonal contribution is bounded by $\sum_{j > k} |\bar{T}_{k,j}| \leq C'/b^k$ for a constant $C'$ depending on the moments of $P$. The stated condition absorbs this into the bound on $\rho$ and is sufficient but not sharp.
 
-In particular, when $\rho$ is small (smooth input distribution), the eigenvalues of $T$ are close to $\lbrace{}1, 1/b, \ldots, 1/b^N\rbrace{}$. For the Diaconis-Fulman addition case ($V \sim \text{Binom}(n, 1/b)$), the m-Bit Equidistribution Lemma (Theorem 2) gives the exact spectrum without perturbation bounds.
+In particular, when $\rho$ is small (smooth input distribution), the eigenvalues of $T$ are close to $\lbrace{}1, 1/b, \ldots, 1/b^{N_c}\rbrace{}$. For the Diaconis-Fulman addition case ($V \sim \text{Binom}(n, 1/b)$), the m-Bit Equidistribution Lemma (Theorem 2) gives the exact spectrum without perturbation bounds.
 
 ---
 
@@ -124,15 +192,15 @@ $$\frac{1}{b}\sum_{j=0}^{b-1} \omega^{m(u+j)} B(u+j) = \omega^{mu} \cdot \frac{1
 
 Since $\frac{1}{b}\sum_j \omega^{mj} = 0$ for $m \neq 0$, the leading term of $B$ vanishes and only the forward-difference terms survive, reducing $\deg(B)$ by 1. The induction proceeds identically: after $m$ uniform-mod-$b$ averagings, all oscillatory modes of degree $\leq k-1-m$ vanish. For $m \geq k$: no oscillation remains, and the leading coefficient is $1/b^k$. $\square$
 
-**Corollary 2.1** (Diaconis-Fulman Spectrum for Addition). For base-$b$ addition of $n$ independent $\text{Uniform}\lbrace{}0, \ldots, b-1\rbrace{}$ digits, $V$ has $n$ independent uniform-mod-$b$ components. By Theorem 2, the carry operator on $\lbrace{}0, \ldots, \lfloor n/(b-1) \rfloor\rbrace{}$ has eigenvalues exactly $\lbrace{}1, 1/b, \ldots, 1/b^{\lfloor n/(b-1)\rfloor}\rbrace{}$, recovering [1, Theorem 1].
+**Corollary 2.1** (Diaconis-Fulman Spectrum for Addition). For base-$b$ addition of $n$ independent $\text{Uniform}\lbrace{}0, \ldots, b-1\rbrace{}$ digits, $V$ has $n$ independent uniform-mod-$b$ components and $v_{\max} = n(b-1)$, so the full finite operator acts on $\lbrace{}0, \ldots, n\rbrace{}$. Starting from $c_0 = 0$, however, the reachable carries are $\lbrace{}0, \ldots, n-1\rbrace{}$. Restricting to this reachable subspace recovers the classical Diaconis-Fulman spectrum $\lbrace{}1, 1/b, \ldots, 1/b^{n-1}\rbrace{}$ [1, Theorem 1].
 
 ### 3.3 Corollaries for Multiplication
 
 **Corollary 2.2** (Double Universality). For base-2 multiplication at position $j \geq 2$: $\text{conv}_j = g_j + h_j + S$ where $g_j, h_j \sim \text{Bernoulli}(1/2)$ are independent of $S = \sum_{i=1}^{j-1} g_i h_{j-i}$. Thus $m = 2$, and the transfer operator $T_j$ has eigenvalues $\lbrace{}1, 1/2, 1/4\rbrace{}$ exactly. Verified for $j = 2, \ldots, 10$ with exact rational arithmetic (A13).
 
-**Corollary 2.3** (Composition Spectral Gap). The position-dependent operators $T_1, \ldots, T_K$ are each upper-triangular in the monomial basis through degree 2 with diagonal entries $(1, 1/b, 1/b^2)$ (Corollary 2.2 for $b=2$; Corollary 2.4 for general prime $b$). The product of upper-triangular matrices is upper-triangular with the product of diagonal entries, so the composed operator $T_1 \cdots T_K$ has eigenvalues $(1, (1/b)^K, (1/b^2)^K)$ on the degree-$\leq 2$ polynomial subspace. The dominant sub-leading eigenvalue is $(1/b)^K$, governing the convergence rate of boundary observables. In particular, the trace anomaly satisfies $\alpha_1(K) = c_1 + P(K) \cdot (1/2)^K$ (base 2), where the limit $c_1$ and the polynomial prefactor $P(K)$ are characterized in [E]; direct enumeration to $K = 21$ yields $c_1 = 0.17453\ldots$, matching $\pi/18$ to 4.3 digits (conjectured but not proved).
+**Corollary 2.3** (Composition Spectral Gap). The position-dependent operators $T_1, \ldots, T_K$ are each upper-triangular in the monomial basis through degree 2 with diagonal entries $(1, 1/b, 1/b^2)$ (Corollary 2.2 for $b=2$; and, for general prime $b$, by the proof-sketch extension summarized in Corollary 2.4). The product of upper-triangular matrices is upper-triangular with the product of diagonal entries, so the composed operator $T_1 \cdots T_K$ has eigenvalues $(1, (1/b)^K, (1/b^2)^K)$ on the degree-$\leq 2$ polynomial subspace. The dominant sub-leading eigenvalue is $(1/b)^K$, governing the convergence rate of boundary observables. In particular, the trace anomaly satisfies $\alpha_1(K) = c_1 + P(K) \cdot (1/2)^K$ (base 2), where the limit $c_1$ and the polynomial prefactor $P(K)$ are characterized in [E]; direct enumeration to $K = 21$ yields $c_1 = 0.17453\ldots$, matching $\pi/18$ to 4.3 digits (conjectured but not proved).
 
-**Corollary 2.4** (Base-$b$ Generalization). For prime base $b$, the multiplication convolution at position $j \geq 2$ contains the terms $g_j \cdot h_0$ and $g_0 \cdot h_j$, where $g_j, h_j \sim \text{Uniform}\lbrace{}0, \ldots, b-1\rbrace{}$ and $g_0, h_0 \in \lbrace{}1, \ldots, b-1\rbrace{}$ are coprime to $b$. These provide two independent uniform-mod-$b$ additive components, giving eigenvalues $\lbrace{}1, 1/b, 1/b^2\rbrace{}$ exactly. Verified for bases 2, 3, 5, 7 (A13).
+**Corollary 2.4** (Base-$b$ Generalization; proof-sketch status). For prime base $b$, the multiplication convolution at position $j \geq 2$ contains the terms $g_j \cdot h_0$ and $g_0 \cdot h_j$, where $g_j, h_j \sim \text{Uniform}\lbrace{}0, \ldots, b-1\rbrace{}$ and $g_0, h_0 \in \lbrace{}1, \ldots, b-1\rbrace{}$ are coprime to $b$. These provide two independent uniform-mod-$b$ additive components, and the proof sketch above yields the same first three eigenvalues $\lbrace{}1, 1/b, 1/b^2\rbrace{}$. Verified exactly for bases 2, 3, 5, 7 (A13).
 
 ### 3.4 Exponential Convergence of Higher Eigenvalues
 
@@ -388,7 +456,7 @@ Extensive computational searches over all semiprimes $N = pq$ with $p, q < 10^4$
 
 ## 9. Conclusion
 
-We have developed the spectral theory of carries in positional multiplication, extending the Diaconis-Fulman framework from addition to multiplication. The main contribution is the $m$-Bit Equidistribution Lemma (Theorem 2), which yields exact eigenvalues $\lbrace{}1, 1/b, \ldots, 1/b^m\rbrace{}$ for carry operators with $m$ independent uniform-mod-$b$ components, via a Bernoulli-smoothing argument on the monomial basis. For multiplication, this gives universal eigenvalues $\lbrace{}1, 1/b, 1/b^2\rbrace{}$ at each position $j \geq 2$, with higher eigenvalues converging exponentially (Proposition 3). The algebraic perspective (Part III) connects the local mixing rates to the global root distribution of the carry quotient polynomial, yielding a proved spectral radius bound $r_{\max} \leq 3$ for all-positive carry profiles via the Eneström-Kakeya theorem. Two conjectures remain open: the $(b-1)/b$ anti-correlation law (Conjecture 4), for which a boundary transfer theorem extending the covariance induction of [F] is the natural path; and the tight bound $r_{\max} \leq b$ (Conjecture 10), for which the Rouché gap analysis provides strong numerical evidence but no proof.
+We have developed the spectral theory of carries in positional multiplication, extending the Diaconis-Fulman framework from addition to multiplication. The main contribution is the $m$-Bit Equidistribution Lemma (Theorem 2), which in the binary case yields exact eigenvalues $\lbrace{}1, 1/b, \ldots, 1/b^m\rbrace{}$ for carry operators with $m$ independent uniform-mod-$b$ components, via a Bernoulli-smoothing argument on the monomial basis; the general prime-base extension is given in proof-sketch form in §3.2. For multiplication, this gives universal eigenvalues $\lbrace{}1, 1/b, 1/b^2\rbrace{}$ at each position $j \geq 2$, with higher eigenvalues converging exponentially (Proposition 3). The algebraic perspective (Part III) connects the local mixing rates to the global root distribution of the carry quotient polynomial, yielding a proved spectral radius bound $r_{\max} \leq 3$ for all-positive carry profiles via the Eneström-Kakeya theorem. Two conjectures remain open: the $(b-1)/b$ anti-correlation law (Conjecture 4), for which a boundary transfer theorem extending the covariance induction of [F] is the natural path; and the tight bound $r_{\max} \leq b$ (Conjecture 10), for which the Rouché gap analysis provides strong numerical evidence but no proof.
 
 ### Open Problems
 
