@@ -238,7 +238,7 @@ where the geometric sum $\sum_{l=0}^{k-3}(j/(j-1))^l$ is bounded by $k-2$ for al
 
 *Empirical verification (A13, A19):* $\lambda_3^{(3)} = 3/32 = 0.09375$ (error $0.031$ from $1/8$); $\lambda_3^{(5)} \approx 0.1195$ (error $0.006$); $\lambda_3^{(8)} \approx 0.1250$ (error $< 0.001$). The geometric rate $\sim (1/2)^j$ is confirmed. Fitting $|\lambda_k^{(j)} - 1/b^k| \sim C \cdot j^\alpha \cdot (1/b)^j$ for $k = 3, 4, 5$ yields $\alpha \approx k - 3$ (A19), confirming the tight exponent.
 
-**Observation (G08).** The base-3 multiplication transfer operator $T_j$ has universal eigenvalues $\lbrace{}1, 1/3, 1/9\rbrace{}$ for all $j = 1, \ldots, 6$, with $\lambda_3^{(j)} \to 1/27$ as $j \to \infty$.
+**Observation** ([G, experiment G08]). The base-3 multiplication transfer operator $T_j$ has universal eigenvalues $\lbrace{}1, 1/3, 1/9\rbrace{}$ for all $j = 1, \ldots, 6$, with $\lambda_3^{(j)} \to 1/27$ as $j \to \infty$.
 
 ---
 
@@ -296,7 +296,7 @@ The Diaconis-Fulman rate $\lambda_1 = 1/b$ governs *local* carry-value mixing. T
 1. Stationary mean: $\alpha_k \to (b-1)/(2b)$ for $k \geq 5$ (base 2).
 2. One-step anti-correlation: the correction to $\alpha_k$ relative to the bulk value $(b-1)/(2b)$ decays with effective rate $(b-1)/b$, driven by the spectral gap $1 - 1/b$.
 
-Status: Part 1 (stationary mean $(b-1)/(2b)$) verified across 3.17 million measurements in 18 bases; Part 2 (decay rate $(b-1)/b$) confirmed with all bases within $1\sigma$ of the predicted rate; Z-score 32.4 against random control; Z-score > 127 across scaling tests 20–512 bit. Not proved.
+Part 1 (stationary mean $(b-1)/(2b)$) is verified across 3.17 million measurements in 18 bases; Part 2 (decay rate $(b-1)/b$) is confirmed with all bases within $1\sigma$ of the predicted rate; Z-score 32.4 against random control; Z-score > 127 across scaling tests 20–512 bit. A formal proof of both parts remains an open problem; the natural approach is a boundary transfer theorem extending the covariance induction of [F].
 
 **Clarification (A12).** The *raw* carry correlation $\mathrm{Corr}(c_j, c_{j+1})$ at interior positions is **strongly positive** ($\approx 0.85$–$0.88$ for base 2, increasing with $K$), because the mean $\mathbb{E}[c_j] = (j-1)/4$ grows linearly and consecutive carries are co-monotone. The "anti-correlation" refers to the **top-boundary regime**: the coefficients $\alpha_k$ overshoot $(b-1)/(2b)$ and converge oscillatorily, with the oscillation damping at rate $(b-1)/b$.
 
@@ -456,7 +456,7 @@ Extensive computational searches over all semiprimes $N = pq$ with $p, q < 10^4$
 
 ## 9. Conclusion
 
-We have developed the spectral theory of carries in positional multiplication, extending the Diaconis-Fulman framework from addition to multiplication. The main contribution is the $m$-Bit Equidistribution Lemma (Theorem 2), which in the binary case yields exact eigenvalues $\lbrace{}1, 1/b, \ldots, 1/b^m\rbrace{}$ for carry operators with $m$ independent uniform-mod-$b$ components, via a Bernoulli-smoothing argument on the monomial basis; the general prime-base extension is given in proof-sketch form in §3.2. For multiplication, this gives universal eigenvalues $\lbrace{}1, 1/b, 1/b^2\rbrace{}$ at each position $j \geq 2$, with higher eigenvalues converging exponentially (Proposition 3). The algebraic perspective (Part III) connects the local mixing rates to the global root distribution of the carry quotient polynomial, yielding a proved spectral radius bound $r_{\max} \leq 3$ for all-positive carry profiles via the Eneström-Kakeya theorem. Two conjectures remain open: the $(b-1)/b$ anti-correlation law (Conjecture 4), for which a boundary transfer theorem extending the covariance induction of [F] is the natural path; and the tight bound $r_{\max} \leq b$ (Conjecture 10), for which the Rouché gap analysis provides strong numerical evidence but no proof.
+We have developed the spectral theory of carries in positional multiplication, extending the Diaconis-Fulman framework from addition to multiplication. The main contribution is the $m$-Bit Equidistribution Lemma (Theorem 2), which in the binary case yields exact eigenvalues $\lbrace{}1, 1/b, \ldots, 1/b^m\rbrace{}$ for carry operators with $m$ independent uniform-mod-$b$ components, via a Bernoulli-smoothing argument on the monomial basis; the general prime-base extension is given in proof-sketch form in §3.2. For multiplication, this gives universal eigenvalues $\lbrace{}1, 1/b, 1/b^2\rbrace{}$ at each position $j \geq 2$, with higher eigenvalues converging exponentially (Proposition 3). The algebraic perspective (Part III) connects the local mixing rates to the global root distribution of the carry quotient polynomial, yielding a proved spectral radius bound $r_{\max} \leq 3$ for all-positive carry profiles via the Eneström-Kakeya theorem. Two conjectures remain open: the $(b-1)/b$ anti-correlation law (Conjecture 4), for which a boundary transfer theorem extending the covariance induction of [F] is the natural path; and the tight bound $r_{\max} \leq b$ (Conjecture 10), for which the Rouché gap analysis provides strong numerical evidence; a formal proof via the Rouché gap remains open.
 
 ### Open Problems
 

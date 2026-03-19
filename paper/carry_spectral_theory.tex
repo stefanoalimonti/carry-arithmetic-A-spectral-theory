@@ -665,9 +665,10 @@ geometric rate \(\sim (1/2)^j\) is confirmed. Fitting
 \(k = 3, 4, 5\) yields \(\alpha \approx k - 3\) (A19), confirming the tight
 exponent.
 
-\textbf{Observation (G08).} The base-3 multiplication transfer operator \(T_j\)
-has universal eigenvalues \(\lbrace{}1, 1/3, 1/9\rbrace{}\) for all
-\(j = 1, \ldots, 6\), with \(\lambda_3^{(j)} \to 1/27\) as \(j \to \infty\).
+\textbf{Observation} ({[}G, experiment G08{]}). The base-3 multiplication
+transfer operator \(T_j\) has universal eigenvalues
+\(\lbrace{}1, 1/3, 1/9\rbrace{}\) for all \(j = 1, \ldots, 6\), with
+\(\lambda_3^{(j)} \to 1/27\) as \(j \to \infty\).
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -779,11 +780,12 @@ satisfy: 1. Stationary mean: \(\alpha_k \to (b-1)/(2b)\) for \(k \geq 5\) (base
 bulk value \((b-1)/(2b)\) decays with effective rate \((b-1)/b\), driven by the
 spectral gap \(1 - 1/b\).
 
-Status: Part 1 (stationary mean \((b-1)/(2b)\)) verified across 3.17 million
-measurements in 18 bases; Part 2 (decay rate \((b-1)/b\)) confirmed with all
+Part 1 (stationary mean \((b-1)/(2b)\)) is verified across 3.17 million
+measurements in 18 bases; Part 2 (decay rate \((b-1)/b\)) is confirmed with all
 bases within \(1\sigma\) of the predicted rate; Z-score 32.4 against random
-control; Z-score \textgreater{} 127 across scaling tests 20--512 bit. Not
-proved.
+control; Z-score \textgreater{} 127 across scaling tests 20--512 bit. A formal
+proof of both parts remains an open problem; the natural approach is a boundary
+transfer theorem extending the covariance induction of {[}F{]}.
 
 \textbf{Clarification (A12).} The \emph{raw} carry correlation
 \(\mathrm{Corr}(c_j, c_{j+1})\) at interior positions is \textbf{strongly
@@ -1134,7 +1136,7 @@ theorem. Two conjectures remain open: the \((b-1)/b\) anti-correlation law
 (Conjecture 4), for which a boundary transfer theorem extending the covariance
 induction of {[}F{]} is the natural path; and the tight bound
 \(r_{\max} \leq b\) (Conjecture 10), for which the Rouché gap analysis provides
-strong numerical evidence but no proof.
+strong numerical evidence; a formal proof via the Rouché gap remains open.
 
 \subsubsection{Open Problems}\label{open-problems}
 

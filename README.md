@@ -6,7 +6,7 @@
 
 ## Main Result
 
-The $m$-Bit Equidistribution Lemma (Theorem 2): at any position $j \geq 2$ in base-$b$ multiplication, the first $m = \lfloor \log_b(j) \rfloor$ bits of the convolution digit are exactly equidistributed. This extends the Diaconis-Fulman spectral theorem from addition to multiplication carries, establishing eigenvalues $\{1, 1/b, \ldots, 1/b^m\}$ for the carry transfer operator.
+The $m$-Bit Equidistribution Lemma (Theorem 2): if the convolution sum at a given position contains $m$ independent uniform-mod-$b$ additive components, the carry transfer operator has exact eigenvalues $\{1, 1/b, \ldots, 1/b^m\}$. For multiplication at position $j \geq 2$, two free digit bits yield $m = 2$ and universal eigenvalues $\{1, 1/b, 1/b^2\}$; higher eigenvalues converge exponentially to $1/b^k$ as $j \to \infty$ (Proposition 3).
 
 ## Status
 
@@ -17,19 +17,19 @@ Complete. Ready for submission.
 ```
 paper/carry_spectral_theory.md       The paper
 experiments/
-  A01_perfactor_identity.py          Per-factor identity (Prop 1a)
-  A02_constant_c_precision.py        Constant c high-precision (Thm 1b)
-  A03_constant_c_method.py           Constant c methodology (Thm 1b)
-  A04_c2_decomposition.py            c2 analytical decomposition (Thm 1c)
+  A01_perfactor_identity.py          Per-factor identity (Proposition 5, §6)
+  A02_constant_c_precision.py        Trace anomaly high-precision (§6.1)
+  A03_constant_c_method.py           Trace anomaly methodology (§6.1)
+  A04_c2_decomposition.py            c₂ analytical decomposition (§6)
   A05_markov_transition.py           Carry Markov transition matrix (§2)
-  A06_diaconis_fulman.py             Diaconis-Fulman verification (§2)
-  A07_rouche_rmax.py                 Rouche analysis for r_max (Thm 2)
-  A08_boundary_proof.py              Carry boundary proof (Prop 3)
-  A09_gap3_closure.py                Gap-3 r_max closure (Conj 4)
-  A10_counterexample.py              Counterexample analysis (Conj 4)
-  A11_rouche_bound.py                r_max Rouche bound (Thm 5)
-  A12_anticorrelation.py             Anti-correlation spectral (Conj 4)
-  A13_equidistribution.py            m-bit equidistribution lemma (Thm 2)
+  A06_diaconis_fulman.py             Diaconis-Fulman verification (Corollary 2.1)
+  A07_rouche_rmax.py                 Rouché analysis for r_max (§8)
+  A08_boundary_proof.py              Carry boundary structure (§7.1)
+  A09_gap3_closure.py                Gap-3 r_max closure (Corollary 9)
+  A10_counterexample.py              Counterexample search for r_max > b (Conjecture 10)
+  A11_rouche_bound.py                Rouché bound on |z|=b (§8.1)
+  A12_anticorrelation.py             Anti-correlation spectral (Conjecture 4)
+  A13_equidistribution.py            m-Bit Equidistribution Lemma (Theorem 2, Corollaries 2.1–2.4, Proposition 3)
   A14_isochrone_mc.c                 Isochrone Monte Carlo profile (§4.2)
   A15_mellin_exact_fK.py             Mellin transform of exact f_K(T) (§4.2)
   A16_cascade_closed_forms.py        Cascade closed-form expressions (§4.2)
@@ -65,6 +65,7 @@ python experiments/A01_perfactor_identity.py
 | [E] | The Trace Anomaly of Binary Multiplication | [`carry-arithmetic-E-trace-anomaly`](https://github.com/stefanoalimonti/carry-arithmetic-E-trace-anomaly) |
 | [F] | Exact Covariance Structure | [`carry-arithmetic-F-covariance-structure`](https://github.com/stefanoalimonti/carry-arithmetic-F-covariance-structure) |
 | [G] | The Angular Uniqueness of Base 2 | [`carry-arithmetic-G-angular-uniqueness`](https://github.com/stefanoalimonti/carry-arithmetic-G-angular-uniqueness) |
+| [B] | Carry Polynomials and the Euler Product | [`carry-arithmetic-B-zeta-approximation`](https://github.com/stefanoalimonti/carry-arithmetic-B-zeta-approximation) |
 | [P2] | The Sector Ratio in Binary Multiplication | [`carry-arithmetic-P2-sector-ratio`](https://github.com/stefanoalimonti/carry-arithmetic-P2-sector-ratio) |
 
 ### Citation

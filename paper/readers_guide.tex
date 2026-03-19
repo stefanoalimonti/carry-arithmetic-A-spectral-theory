@@ -49,6 +49,19 @@
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -152,6 +165,12 @@ The carry sequence is \(0, 0, 0, 0, 1, 1, 1, 1\). At position 3, the column sum
 quickly does a typical carry chain settle into a steady state? What controls the
 rate?} These are the questions we answer.
 
+\begin{figure}
+\centering
+\includegraphics{../figures/fig_carry_chain.png}
+\caption{Carry chain for 13 × 11 in base 2}
+\end{figure}
+
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
@@ -224,6 +243,12 @@ As the position \(j\) grows (i.e., as the column sum involves more product
 terms), all eigenvalues converge exponentially fast to the Diaconis-Fulman
 values \(1/b^k\). Multiplication asymptotically ``looks like'' addition at deep
 positions.
+
+\begin{figure}
+\centering
+\includegraphics{../figures/fig_eigenvalue_decay.png}
+\caption{Eigenvalue convergence to Diaconis-Fulman values}
+\end{figure}
 
 \subsubsection{Result 4: Spectral Radius Bound (Corollary
 9)}\label{result-4-spectral-radius-bound-corollary-9}

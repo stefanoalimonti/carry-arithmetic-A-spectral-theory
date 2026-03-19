@@ -44,6 +44,8 @@ Each column sum is the convolution $\text{conv}_k = \sum_{i+j=k} g_i h_j$. The c
 
 The carry sequence is $0, 0, 0, 0, 1, 1, 1, 1$. At position 3, the column sum (= 3) exceeds the base (= 2), and a carry is born. It then persists. *How quickly does a typical carry chain settle into a steady state? What controls the rate?* These are the questions we answer.
 
+![Carry chain for 13 × 11 in base 2](../figures/fig_carry_chain.png)
+
 ---
 
 ## 2. Main Results in Plain Language
@@ -79,6 +81,8 @@ The remaining $g_i h_j$ terms in the column sum (the "product terms") are not un
 $$\lambda_k^{(j)} = 1/b^k + O(j^{k-3} \cdot b^{-(j-1)})$$
 
 As the position $j$ grows (i.e., as the column sum involves more product terms), all eigenvalues converge exponentially fast to the Diaconis-Fulman values $1/b^k$. Multiplication asymptotically "looks like" addition at deep positions.
+
+![Eigenvalue convergence to Diaconis-Fulman values](../figures/fig_eigenvalue_decay.png)
 
 ### Result 4: Spectral Radius Bound (Corollary 9)
 
